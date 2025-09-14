@@ -7,17 +7,18 @@
             <div class="col-12 col-lg-10">
                 <div class="product-media-section mb-4">
                     {{-- عرض الصورة الرئيسية من خلال العلاقة --}}
-                    <div class="main-image-container mb-3">
+                  <div class="main-image-container mb-3">
                         @if ($order->images->isNotEmpty())
                             <img id="main-product-image"
-                                src="{{ asset('storage/' . $order->images->first()->image_path) }}"
+                                src="{{ asset($order->images->first()->image_path) }}"
                                 class="img-fluid rounded-3 shadow-sm"
                                 alt="{{ $order->order_name ?? 'السلعة الرئيسية' }}" />
                         @else
-                            <img id="main-product-image" src="{{ asset('image/placeholder.png') }}"
+                            <img id="main-product-image" src="{{ asset('images/placeholder.png') }}"
                                 class="img-fluid rounded-3 shadow-sm" alt="صورة غير متوفرة" />
                         @endif
                     </div>
+
 
                     {{-- عرض الصور المصغرة في السلايدر --}}
                     <div class="thumbnails-container-wrapper">
@@ -25,13 +26,14 @@
                             <div class="swiper-wrapper">
                                 @foreach ($order->images as $image)
                                     <div class="swiper-slide">
-                                        <img src="{{ asset('storage/' . $image->image_path) }}"
+                                        <img src="{{ asset($image->image_path) }}"
                                             alt="صورة مصغرة"
                                             class="thumbnail-item rounded-3 img-fluid"
-                                            data-src="{{ asset('storage/' . $image->image_path) }}" />
+                                            data-src="{{ asset($image->image_path) }}" />
                                     </div>
                                 @endforeach
                             </div>
+
                             <div class="swiper-button-prev"></div>
                             <div class="swiper-button-next"></div>
                         </div>

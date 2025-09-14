@@ -1002,7 +1002,7 @@ html {
     justify-content: center;
     align-items: center;
     margin-top: 100px;
-    margin-bottom: 100px;
+        margin-bottom: 24px;
 }
 
 .gallery-column {
@@ -1702,7 +1702,7 @@ line-height: 100%;
 letter-spacing: 0%;
 text-align: right;
 margin-bottom: 53px;
-  white-space: normal; 
+  white-space: normal;
 word-break: break-word;
     max-width: 400px;
 }

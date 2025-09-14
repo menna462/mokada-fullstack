@@ -126,10 +126,10 @@
                                     </a>
                                     <div class="featured-label">مميز</div>
                                     @if ($order->images->isNotEmpty())
-                                        <img src="{{ asset('storage/' . $order->images->first()->image_path) }}"
+                                        <img src="{{ asset($order->images->first()->image_path) }}"
                                             alt="{{ $order->alternative_item_title ?? $order->item_title }}" />
                                     @else
-                                        <img src="{{ asset('path/to/default/image.jpg') }}" alt="صورة غير متوفرة" />
+                                        <img src="{{ asset('images/default.jpg') }}" alt="صورة غير متوفرة" />
                                     @endif
                                 </div>
                                 <div class="card-content">
@@ -166,8 +166,7 @@
                                             style="color: {{ $favoriteIds->contains($order->id) ? 'red' : 'white' }};"></i>
                                     </a>
                                     @if ($order->images->isNotEmpty())
-                                        <img src="{{ asset('storage/' . $order->images->first()->image_path) }}"
-                                            alt="Order Image" />
+                                        <img src="{{ asset($order->images->first()->image_path) }}" alt="Order Image" />
                                     @endif
                                 </div>
                                 <div class="card-content">
@@ -340,25 +339,26 @@
     </div>
 
     <!-- six -->
-<div class="container">
-<div class="gallery-row d-flex flex-wrap">
-@foreach($deals as $deal)
-<div class="gallery-column col-md-6">
-<div class="deal-card" style="background-image: url('{{ asset($deal->image_path) }}');">
-<div class="deal-content">
-<h3>{{ $deal->title }}</h3>
-<a href="{{ $deal->link }}" class="btn btn-deal">
-    <span class="tit-alan"> تصفح الاعلان</span>
-    <span class="icon-box">AB</span>
-</a>
-</div>
-</div>
-</div>
-@endforeach
-</div>
-</div>
-
-
-
-
+    <div class="container">
+        <div class="gallery-row d-flex flex-wrap">
+            @foreach ($deals as $deal)
+                <div class="gallery-column col-md-6">
+                    <div class="deal-card" style="background-image: url('{{ asset($deal->image_path) }}');">
+                        <div class="deal-content">
+                            <h3>{{ $deal->title }}</h3>
+                            <a href="{{ $deal->link }}" class="btn btn-deal">
+                                <span class="tit-alan"> تصفح الاعلان</span>
+                                <span class="icon-box">AB</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        <div class="text-center">
+            <a href="{{ route('deals.index') }}" class="btn btn-primary px-4 py-2">
+                عرض الكل
+            </a>
+        </div>
+    </div>
 @endsection
