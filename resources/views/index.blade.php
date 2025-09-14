@@ -340,17 +340,25 @@
     </div>
 
     <!-- six -->
-    <div class="container">
-        <div class="gallery-row">
-            <div class="gallery-column col-md-6">
-                <img src={{ asset('frontend/image/Frame45.png') }} alt="صورة توضيحية رقم 1"
-                    class="gallery-image img-fluid my-3" />
-            </div>
+<div class="container">
+<div class="gallery-row d-flex flex-wrap">
+@foreach($deals as $deal)
+<div class="gallery-column col-md-6">
+<div class="deal-card" style="background-image: url('{{ asset($deal->image_path) }}');">
+<div class="deal-content">
+<h3>{{ $deal->title }}</h3>
+<a href="{{ $deal->link }}" class="btn btn-deal">
+    <span class="tit-alan"> تصفح الاعلان</span>
+    <span class="icon-box">AB</span>
+</a>
+</div>
+</div>
+</div>
+@endforeach
+</div>
+</div>
 
-            <div class="gallery-column col-md-6">
-                <img src={{ asset('frontend/image/Frame44.png') }} alt="صورة توضيحية رقم 2"
-                    class="gallery-image img-fluid my-3" />
-            </div>
-        </div>
-    </div>
+
+
+
 @endsection

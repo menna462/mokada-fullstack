@@ -97,5 +97,6 @@ Route::get('/order-details/{order}', [OrderController::class, 'orderDetails'])->
 Route::get('/categories/{id}/orders', [CategoryController::class, 'showOrders'])->name('categories.orders');
 Route::get('/orders/search', [OrderController::class, 'search'])->name('orders.search');
 Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+Route::get('/all-deals', [FrontendController::class, 'showAll'])->name('all.deals');
 
 require __DIR__ . '/auth.php';

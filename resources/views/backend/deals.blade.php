@@ -1,7 +1,6 @@
 @extends('backend.dashboard')
 
 @section('main')
-
     <div id="layoutSidenav_content">
         <main>
             <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
@@ -52,17 +51,18 @@
                                             <td>{{ $deal->id }}</td>
                                             <td>
                                                 @if ($deal->image_path)
-                                                    <img src="{{ asset('storage/' . $deal->image_path) }}" alt="{{ $deal->title }}"
+                                                    <img src="{{ asset($deal->image_path) }}" alt="عدم التحميل"
                                                         style="width: 50px; height: auto;">
                                                 @else
                                                     لا توجد صورة
                                                 @endif
                                             </td>
                                             <td>{{ $deal->title }}</td>
-                                            <td><a href="{{ $deal->link }}" target="_blank">{{ Str::limit($deal->link, 30) }}</a></td>
+                                            <td><a href="{{ $deal->link }}"
+                                                    target="_blank">{{ Str::limit($deal->link, 30) }}</a></td>
                                             <td>
-                                                <form action="{{ route('deals.toggle-publish', $deal) }}"
-                                                    method="POST" style="display: inline-block;">
+                                                <form action="{{ route('deals.toggle-publish', $deal) }}" method="POST"
+                                                    style="display: inline-block;">
                                                     @csrf
                                                     <button type="submit"
                                                         class="btn btn-sm @if ($deal->is_published) btn-success @else btn-danger @endif">
@@ -82,7 +82,7 @@
                                                 <form action="{{ route('deals.destroy', $deal) }}" method="POST"
                                                     style="display: inline-block;">
                                                     @csrf
-                                                    @method('DELETE')
+
                                                     <button type="submit"
                                                         class="btn btn-datatable btn-icon btn-transparent-dark"
                                                         onclick="return confirm('هل أنت متأكد من حذف هذا العرض؟');">

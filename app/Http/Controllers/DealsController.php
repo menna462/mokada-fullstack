@@ -49,7 +49,7 @@ class DealsController extends Controller
             "image_path" => $imagePath,
         ]);
 
-        return redirect()->route("backend.deals")->with("message", "Created successfully");
+        return redirect()->route("deals")->with("message", "Created successfully");
     }
 
     /**

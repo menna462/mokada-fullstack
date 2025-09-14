@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Deal;
 use App\Models\Favorite;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -16,6 +17,10 @@ class FrontendController extends Controller
     public function index()
     {
         $allCategories = Category::where('is_published', true)->get();
+        $deals = Deal::where('is_published', true)
+            ->orderBy('created_at', 'desc')
+            ->take(2)
+            ->get();
         $homeCategories = Category::where('is_published', true)
             ->orderBy('id', 'asc')
             ->take(5)
@@ -33,7 +38,7 @@ class FrontendController extends Controller
 
         $featuredOrders = Order::where('is_featured', true)->get();
 
-        return view('index', compact('homeCategories', 'allCategories', 'featuredOrders', 'latestOrders','featuredOrders', 'favoriteIds'));
+        return view('index', compact('homeCategories', 'allCategories', 'featuredOrders', 'latestOrders', 'featuredOrders', 'favoriteIds', 'deals'));
     }
 
     public function showAllCategories()
@@ -44,7 +49,11 @@ class FrontendController extends Controller
         return view('include.sections', compact('allCategories'));
     }
 
-
+    public function showAll()
+    {
+        $allDeals = Deal::where('is_published', true)->get();
+        return view('include.alldeals', compact('allDeals'));
+    }
 
     /**
      * Show the form for editing the specified resource.
