@@ -15,6 +15,8 @@ class OrderController extends Controller
      */
     public function index()
     {
+
+
         $pendingOrders = Order::where('is_published', false)->where('is_rejected', false)->with('category', 'images')->get();
         $acceptedOrders = Order::where('is_published', true)->with('category', 'images')->get();
         $rejectedOrders = Order::where('is_rejected', true)->with('category', 'images')->get();
@@ -34,58 +36,62 @@ class OrderController extends Controller
     /**
      * تخزين طلب جديد.
      */
-    public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'person_name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'whatsapp_number' => 'nullable|string|max:255',
-            'number' => 'nullable|string|max:255',
-            'item_amount' => 'required|numeric',
-            'order_name' => 'required|string|max:255',
-            'alternative_requested' => 'nullable|string|max:255',
-            'alternative_item_title' => 'nullable|string|max:255',
-            'item_specifications' => 'nullable|string',
-            'notes' => 'nullable|string',
-            'cart_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-        $itemAmount = $validatedData['item_amount'];
-
-        if ($itemAmount >= 0 && $itemAmount <= 4000) {
-            $orderType = 'صغير';
-        } elseif ($itemAmount > 4000 && $itemAmount <= 10000) {
-            $orderType = 'متوسط';
-        } else {
-            $orderType = 'كبير';
-        }
-        $validatedData['order_type'] = $orderType;
-        $validatedData['is_published'] = false;
-        $validatedData['is_rejected'] = false;
-        $validatedData['is_featured'] = false; // إضافة قيمة افتراضية
-
-        $order = Order::create($validatedData);
-
-    if ($request->hasFile('cart_images')) {
-        $uploadDirectory = 'images/orders';
-        if (!file_exists(public_path($uploadDirectory))) {
-            mkdir(public_path($uploadDirectory), 0777, true);
-        }
-
-        foreach ($request->file('cart_images') as $image) {
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->move(public_path($uploadDirectory), $imageName);
-            $imagePath = $uploadDirectory . '/' . $imageName;
-
-            $order->images()->create([
-                'image_path' => $imagePath
+        public function store(Request $request)
+        {
+            $validatedData = $request->validate([
+                'category_id' => 'required|exists:categories,id',
+                'person_name' => 'required|string|max:255',
+                'address' => 'required|string|max:255',
+                'whatsapp_number' => 'nullable|string|max:255',
+                'number' => 'nullable|string|max:255',
+                'item_amount' => 'required|numeric',
+                'order_name' => 'required|string|max:255',
+                'alternative_requested' => 'nullable|string|max:255',
+                'alternative_item_title' => 'nullable|string|max:255',
+                'item_specifications' => 'nullable|string',
+                'notes' => 'nullable|string',
+                'cart_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
-        }
-    }
 
-        return redirect()->route('home')->with('success', 'تم إرسال طلبك بنجاح، سيتم مراجعته قريبًا!');
-    }
+            $itemAmount = $validatedData['item_amount'];
+
+            if ($itemAmount >= 0 && $itemAmount <= 4000) {
+                $orderType = 'صغير';
+            } elseif ($itemAmount > 4000 && $itemAmount <= 10000) {
+                $orderType = 'متوسط';
+            } else {
+                $orderType = 'كبير';
+            }
+
+            $validatedData['order_type'] = $orderType;
+            $validatedData['is_published'] = false;
+            $validatedData['is_rejected'] = false;
+            $validatedData['is_featured'] = false;
+
+            $order = Order::create($validatedData);
+
+            if ($request->hasFile('cart_images')) {
+                $uploadDirectory = 'images/orders';
+                $directoryPath = public_path($uploadDirectory); // 🟢 نخزن بره public
+
+                if (!is_dir($directoryPath)) { // 🟢 نستخدم is_dir بدلاً من file_exists
+                    mkdir($directoryPath, 0777, true);
+                }
+
+                foreach ($request->file('cart_images') as $image) {
+                    $imageName = time() . '_' . $image->getClientOriginalName();
+                    $image->move($directoryPath, $imageName); // 🟢 نخزن في base_path
+                    $imagePath = $uploadDirectory . '/' . $imageName;
+
+                    $order->images()->create([
+                        'image_path' => $imagePath
+                    ]);
+                }
+            }
+
+            return redirect()->route('home')->with('success', 'تم إرسال طلبك بنجاح، سيتم مراجعته قريبًا!');
+        }
+
 
     public function show(string $id)
     {
@@ -130,9 +136,12 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         foreach ($order->images as $image) {
-            Storage::disk('public')->delete($image->image_path);
-            $image->delete();
+        $imageFullPath = base_path($image->image_path);
+        if (file_exists($imageFullPath)) {
+            unlink($imageFullPath);
         }
+        $image->delete();
+    }
         $order->delete();
         return redirect()->route('order')->with('success', 'تم حذف الطلب بنجاح!');
     }

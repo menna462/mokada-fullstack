@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class BackendController extends Controller
@@ -12,7 +13,13 @@ class BackendController extends Controller
      */
     public function index()
     {
-     return view('backend.include.body');
+        // جلب أعداد الطلبات
+        $totalOrdersCount = Order::count();
+        $acceptedOrdersCount = Order::where('is_published', true)->count();
+        $rejectedOrdersCount = Order::where('is_rejected', true)->count();
+
+        // إرسال المتغيرات إلى ملف الـ view
+        return view('backend.include.body', compact('totalOrdersCount', 'acceptedOrdersCount', 'rejectedOrdersCount'));
     }
 
     /**

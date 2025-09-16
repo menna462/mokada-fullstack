@@ -9,9 +9,9 @@
                             <div class="col-auto mt-4">
                                 <h1 class="page-header-title">
                                     <div class="page-header-icon"><i data-feather="activity"></i></div>
-                                    Dashboard
+                                    لوحة تحكم المقايضه
                                 </h1>
-                                <div class="page-header-subtitle">Example dashboard overview and content summary
+                                <div class="page-header-subtitle">مرحبا بك فى لوحة تحكم موقع المقايضه
                                 </div>
                             </div>
                         </div>
@@ -28,9 +28,8 @@
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="me-3">
                                         <i class="feather-xl text-primary mb-3" data-feather="package"></i>
-                                        <h5>Powerful Components</h5>
-                                        <div class="text-muted small">To create informative visual elements on your
-                                            pages</div>
+                                        <h5>عدد الطلبات</h5>
+                                        <div class="text-muted small" style="font-size: 40px; color: black;">{{ $totalOrdersCount }}</div>
                                     </div>
                                     <img src={{ asset('backend/assets/img/illustrations/browser-stats.svg') }}
                                         alt="..." style="width: 8rem" />
@@ -45,9 +44,8 @@
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="me-3">
                                         <i class="feather-xl text-secondary mb-3" data-feather="book"></i>
-                                        <h5>Documentation</h5>
-                                        <div class="text-muted small">To keep you on track when working with our
-                                            toolkit</div>
+                                        <h5>عدد الطلبات المقبوله</h5>
+                                        <div class="text-muted small" style="font-size: 40px; color: black;">{{ $acceptedOrdersCount }}</div>
                                     </div>
                                     <img src={{ asset('backend/assets/img/illustrations/processing.svg') }} alt="..."
                                         style="width: 8rem" />
@@ -62,9 +60,8 @@
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="me-3">
                                         <i class="feather-xl text-green mb-3" data-feather="layout"></i>
-                                        <h5>Pages &amp; Layouts</h5>
-                                        <div class="text-muted small">To help get you started when building your
-                                            new UI</div>
+                                        <h5>عدد الطلبات المرفوضه</h5>
+                                        <div class="text-muted small" style="font-size: 40px; color: black;">{{ $rejectedOrdersCount }}</div>
                                     </div>
                                     <img src={{ asset('backend/assets/img/illustrations/windows.svg') }} alt="..."
                                         style="width: 8rem" />

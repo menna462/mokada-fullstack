@@ -27,7 +27,8 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered" style="white-space: nowrap;" width="100%" cellspacing="0">
+                            <table id="datatablesSimple" class="table table-bordered" style="white-space: nowrap;"
+                                width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -60,9 +61,9 @@
                                             <td>{{ $order->order_type }}</td>
                                             <td>{{ $order->alternative_requested ?? 'لا يوجد' }}</td>
                                             <td>{{ $order->alternative_item_title ?? 'لا يوجد' }}</td>
-                                            <td>{{ $order->item_specifications ?? 'لا يوجد' }}</td>
-                                            <td>{{ $order->notes ?? 'لا يوجد' }}</td>
-                                            <td>
+                                            <td>{{ \Illuminate\Support\Str::limit($order->item_specifications ?? 'لا يوجد', 60, '...') }}</td>
+                                            <td>{{ \Illuminate\Support\Str::limit($order->notes ?? 'لا يوجد', 60, '...') }}</td>
+                                             <td>
                                                 @if ($order->images->isNotEmpty())
                                                     <img src="{{ asset($order->images->first()->image_path) }}"
                                                         alt="Order Image" width="50">

@@ -66,7 +66,7 @@
                         <div class="curd">
                             <p class="product-owner">السلعة البديلة</p>
                             <h4 class="product-name">{{ $order->alternative_requested ?? 'لا يوجد بديل' }}</h4>
-                            <div class="d-flex adress my-4">
+                            <div class="d-flex adress my-4" style="  " >
                                 <p class="pr-1"> عنوان البديل:</p>
                                 <p>{{ $order->alternative_item_title ?? 'لا يوجد عنوان' }}</p>
                             </div>

@@ -144,6 +144,12 @@
                     @endforeach
                 </div>
             </div>
+            <div class="requests-button-prev">
+          <i class="fas fa-chevron-left"></i>
+        </div>
+        <div class="requests-button-next">
+          <i class="fas fa-chevron-right"></i>
+        </div>
         </div>
     </section>
     <!-- foor tow -->
@@ -183,6 +189,13 @@
                     @endforeach
                 </div>
             </div>
+                    <!-- أزرار التنقل -->
+        <div class="offers-button-prev">
+          <i class="fas fa-chevron-left"></i>
+        </div>
+        <div class="offers-button-next">
+          <i class="fas fa-chevron-right"></i>
+        </div>
         </div>
     </section>
 
@@ -356,7 +369,7 @@
             @endforeach
         </div>
         <div class="text-center">
-            <a href="{{ route('deals.index') }}" class="btn btn-primary px-4 py-2">
+            <a href="{{ route('all.deals') }}" class="btn btn-primary px-4 py-2">
                 عرض الكل
             </a>
         </div>

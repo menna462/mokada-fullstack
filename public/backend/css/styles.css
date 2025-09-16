@@ -216,7 +216,7 @@ h6, .h6 {
 }
 
 p {
-  margin-top: 0;
+  margin-top: 25px;
   margin-bottom: 1rem;
 }
 
@@ -18086,7 +18086,7 @@ body {
   min-width: 0;
   flex-grow: 1;
   min-height: calc(100vh - 3.625rem);
-  margin-left: -15rem;
+  margin-left: 15rem;
 }
 
 .sidenav-toggled #layoutSidenav #layoutSidenav_nav {
@@ -18183,7 +18183,7 @@ body {
   border-color: rgba(0, 0, 0, 0);
 }
 .nav-fixed #layoutSidenav #layoutSidenav_content {
-  padding-left: 15rem;
+  padding-right: 15rem;
   top: 3.625rem;
 }
 
