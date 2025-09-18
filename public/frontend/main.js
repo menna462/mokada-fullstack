@@ -42,52 +42,48 @@ const offersSwiper = new Swiper('.offers-swiper', {
   }
 });
 document.addEventListener('DOMContentLoaded', () => {
-  const mainImage = document.getElementById('main-product-image');
-  const thumbnails = document.querySelectorAll('.thumbnail-item');
+    const mainImage = document.getElementById('main-product-image');
+    const thumbnails = document.querySelectorAll('.thumbnail-item');
 
-  // Initialize Swiper.js for thumbnails
-  const thumbnailSwiper = new Swiper('.product-thumbnails-swiper', {
-      loop: false,
-      slidesPerView: 4,
-      spaceBetween: 10,
-      freeMode: true,
-      navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-      },
-      breakpoints: {
-          // Mobile (less than 576px)
-          0: {
-              slidesPerView: 1,
-              spaceBetween: 5
-          },
-          // Tablet (576px and up)
-          576: {
-              slidesPerView: 3,
-              spaceBetween: 7
-          },
-          // Desktop (992px and up)
-          992: {
-              slidesPerView: 4,
-              spaceBetween: 7
-          }
-      }
-  });
+    // تفعيل السلايدر الخاص بالصور المصغرة فقط
+    const thumbnailSwiper = new Swiper('.product-thumbnails-swiper', {
+        loop: false,
+        slidesPerView: 4,
+        spaceBetween: 10,
+        freeMode: true,
+        // هنا تم توجيه السلايدر لاستخدام الأزرار الجديدة
+        navigation: {
+            nextEl: '.thumbnail-next',
+            prevEl: '.thumbnail-prev',
+        },
+        breakpoints: {
+            0: {
+                slidesPerView: 1,
+                spaceBetween: 5
+            },
+            576: {
+                slidesPerView: 3,
+                spaceBetween: 7
+            },
+            992: {
+                slidesPerView: 4,
+                spaceBetween: 7
+            }
+        }
+    });
 
-  // Image switching logic (unchanged from previous response)
-  thumbnails.forEach(thumbnail => {
-      thumbnail.addEventListener('click', () => {
-          // Remove 'active' class from all thumbnails
-          thumbnails.forEach(item => item.classList.remove('active'));
-          // Add 'active' class to the clicked thumbnail
-          thumbnail.classList.add('active');
-
-          // Get the source from the data-src attribute and update the main image
-          const newImageSrc = thumbnail.getAttribute('data-src');
-          mainImage.src = newImageSrc;
-      });
-  });
+    thumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener('click', () => {
+            thumbnails.forEach(item => item.classList.remove('active'));
+            thumbnail.classList.add('active');
+            const newImageSrc = thumbnail.getAttribute('data-src');
+            mainImage.src = newImageSrc;
+        });
+    });
 });
+
+
+
 // هذا الكود يجعل أيقونة القلب تتفاعل عند الضغط عليها
 document.querySelectorAll(".heart").forEach(heart => {
   heart.addEventListener("click", () => {
@@ -136,5 +132,39 @@ fileInput.addEventListener('change', (event) => {
         }
 
         fileNamesDisplay.appendChild(fileList);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    // باقي الكود الخاص بسلايدر الصور المصغرة كما هو ...
+
+    // وظيفة لعرض أسماء الملفات المرفوعة
+    function handleFileSelection(event) {
+        const fileInput = event.target;
+        const displayContainer = fileInput.nextElementSibling;
+        displayContainer.innerHTML = ''; // مسح المحتوى القديم
+
+        if (fileInput.files.length > 0) {
+            const fileList = document.createElement('ul');
+            fileList.classList.add('list-unstyled');
+            for (let i = 0; i < fileInput.files.length; i++) {
+                const fileItem = document.createElement('li');
+                fileItem.textContent = fileInput.files[i].name;
+                fileList.appendChild(fileItem);
+            }
+            displayContainer.appendChild(fileList);
+        }
+    }
+
+    // ربط الوظيفة بكلا حقل رفع الملفات
+    const desktopFileInput = document.getElementById('cart_images');
+    const mobileFileInput = document.getElementById('cart_images_modal');
+
+    if (desktopFileInput) {
+        desktopFileInput.addEventListener('change', handleFileSelection);
+    }
+
+    if (mobileFileInput) {
+        mobileFileInput.addEventListener('change', handleFileSelection);
     }
 });

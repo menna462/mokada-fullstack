@@ -109,7 +109,7 @@
     <section class="featured-requests-section">
         <div class="section-header">
             <h2>طلبات <span class="highlight-s1">المقايضة</span> المميزة</h2>
-            <a href="#" class="view-all-button">عرض كل الطلبات <i class="fa-solid fa-arrow-left"></i></a>
+            <a href="#" class="view-all-button">عرض الكل <i class="fa-solid fa-arrow-left"></i></a>
         </div>
 
         <div class="requests-swiper-container">
@@ -145,18 +145,18 @@
                 </div>
             </div>
             <div class="requests-button-prev">
-          <i class="fas fa-chevron-left"></i>
-        </div>
-        <div class="requests-button-next">
-          <i class="fas fa-chevron-right"></i>
-        </div>
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <div class="requests-button-next">
+                <i class="fas fa-chevron-right"></i>
+            </div>
         </div>
     </section>
     <!-- foor tow -->
     <section class="featured-offers-section mb-5">
         <div class="section-header">
             <h2>أخر <span class="highlight">طلبات</span> المقايضة</h2>
-            <a href="#" class="view-all-button">عرض كل العروض <i class="fa-solid fa-arrow-left"></i></a>
+            <a href="#" class="view-all-button">عرض كل  <i class="fa-solid fa-arrow-left"></i></a>
         </div>
         <div class="offers-swiper-container">
             <div class="swiper offers-swiper">
@@ -189,13 +189,13 @@
                     @endforeach
                 </div>
             </div>
-                    <!-- أزرار التنقل -->
-        <div class="offers-button-prev">
-          <i class="fas fa-chevron-left"></i>
-        </div>
-        <div class="offers-button-next">
-          <i class="fas fa-chevron-right"></i>
-        </div>
+            <!-- أزرار التنقل -->
+            <div class="offers-button-prev">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <div class="offers-button-next">
+                <i class="fas fa-chevron-right"></i>
+            </div>
         </div>
     </section>
 
@@ -205,10 +205,15 @@
             <div class="col-md-8">
                 <div class="request-right">
                     <h2>طلب مقايضة <span class="highlight-form">جديدة</span></h2>
-                    <div class="request-form">
+
+                    <button type="button" class="btn btn-primary d-md-none form-toggle-btn" data-bs-toggle="modal"
+                        data-bs-target="#formModal">
+                        قدم طلبك الآن
+                    </button>
+
+                    <div class="request-form d-none d-md-flex">
                         <form action="{{ route('order.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-
                             <div class="form-columns">
                                 <div class="form-column">
                                     <div class="form-group">
@@ -231,11 +236,9 @@
                                         <input type="text" id="order_name" name="order_name" required
                                             placeholder="اسم السالعة" />
                                     </div>
-
                                     <div class="image-upload-container">
                                         <input type="file" id="cart_images" name="cart_images[]" multiple
                                             accept="image/*" class="d-none">
-
                                         <label for="cart_images" class="image-upload-label">
                                             <svg class="upload-icon" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor">
@@ -245,12 +248,9 @@
                                             </svg>
                                             <span class="upload-text">رفع صور السلعة</span>
                                         </label>
-
                                         <div id="file-names-display" class="file-names-display"></div>
-
                                     </div>
                                 </div>
-
                                 <div class="form-column">
                                     <div class="form-group">
                                         <textarea id="item_specifications" name="item_specifications" rows="1" placeholder="وصف السلعة"></textarea>
@@ -267,7 +267,6 @@
                                         <input type="text" id="alternative_item_title" name="alternative_item_title"
                                             required placeholder="عنوان البديل المطلوب " />
                                     </div>
-
                                     <div class="form-group">
                                         <select name="category_id" id="category_id" required>
                                             <option value="">اختر الفئة</option>
@@ -277,14 +276,93 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <textarea id="notes" name="notes" rows="4" placeholder="  تفاصيل أخري "></textarea>
+                                        <textarea id="notes" name="notes" rows="4" placeholder=" تفاصيل أخري "></textarea>
                                     </div>
-
                                 </div>
                             </div>
-
                             <button type="submit">قدم طلبك الآن</button>
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="formModalLabel">طلب مقايضة جديدة</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body request-form">
+                            <form id="mobileForm" action="{{ route('order.store') }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-columns">
+                                    <div class="form-column">
+                                        <div class="form-group">
+                                            <input type="text" name="person_name" required placeholder="الاسم" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" name="address" required placeholder="العنوان" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="tel" name="number" required placeholder="رقم الموبايل" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="tel" name="whatsapp_number"
+                                                placeholder="رقم الموبايل الواتساب" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" name="order_name" required placeholder="اسم السالعة" />
+                                        </div>
+                                        <div class="image-upload-container">
+                                            <input type="file" id="cart_images_modal" name="cart_images[]" multiple
+                                                accept="image/*" class="d-none">
+                                            <label for="cart_images_modal" class="image-upload-label">
+                                                <svg class="upload-icon" fill="none" viewBox="0 0 24 24"
+                                                    stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12">
+                                                    </path>
+                                                </svg>
+                                                <span class="upload-text">رفع صور السلعة</span>
+                                            </label>
+                                            <div id="file-names-display-modal" class="file-names-display"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-column">
+                                        <div class="form-group">
+                                            <textarea name="item_specifications" rows="1" placeholder="وصف السلعة"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="number" step="0.01" name="item_amount" required
+                                                placeholder="مبلغ السلعه" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" name="alternative_requested" required
+                                                placeholder=" البديلا لمطلوب" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" name="alternative_item_title" required
+                                                placeholder="عنوان البديل المطلوب " />
+                                        </div>
+                                        <div class="form-group">
+                                            <select name="category_id" required>
+                                                <option value="">اختر الفئة</option>
+                                                @foreach ($allCategories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea name="notes" rows="4" placeholder=" تفاصيل أخري "></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit">قدم طلبك الآن</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -313,16 +391,7 @@
                                 <p class="number-text">+96666467891</p>
                             </a>
                         </div>
-                        <div class="contact-item">
-                            <a href="tel:009666467891" class="icon-link">
-                                <div class="icon-bg">
-                                    <i class="fas fa-mobile-alt"></i>
-                                </div>
-                            </a>
-                            <a href="tel:009666467891" class="number-link">
-                                <p class="number-text">009666467891</p>
-                            </a>
-                        </div>
+
                     </div>
                     <div class="social-icons">
                         <a href="#">
